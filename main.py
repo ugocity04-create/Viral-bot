@@ -2,7 +2,7 @@ import os
 import asyncio
 from telegram import Bot
 
-BOT_TOKEN = os.getenv("7744382374:AAFSXZBzimLxVww7q-uDhZVFVvN2tUX_yoU")
+BOT_TOKEN = os.getenv("url = f"https://api.telegram.org/bot{7744382374:AAFSXZBzimLxVww7q-uDhZVFVvN2tUX_yoU}/sendVideo")
 USER_ID = os.getenv("7968704335")
 
 VIDEO_PATH = "videos/bg1.mp4"
