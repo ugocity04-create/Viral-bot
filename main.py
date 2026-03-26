@@ -52,35 +52,47 @@ async def generate_voice(text):
 # ==============================
 # VIDEO CREATION
 # ==============================
-def get_video(duration):
-    clip = VideoFileClip("videos/bg1.mp4")
+from moviepy.editor import *
+from PIL import Image, ImageDraw, ImageFont
 
-    if clip.duration < duration:
-        clip = clip.loop(duration=duration)
+def create_text_image(text, width=900, height=1600):
+    img = Image.new("RGB", (width, height), color=(0, 0, 0))
+    draw = ImageDraw.Draw(img)
 
-    return clip.subclip(0, duration).resize((1080, 1920))
+    try:
+        font = ImageFont.truetype("arial.ttf", 50)
+    except:
+        font = ImageFont.load_default()
+
+    draw.multiline_text((50, 200), text, fill=(255, 255, 255), font=font, align="center")
+
+    img.save("text.png")
+    return "text.png"
+
 
 def create_video(text):
     audio = AudioFileClip("voice.mp3")
     duration = audio.duration
 
-    bg = get_video(duration)
+    bg = VideoFileClip("videos/bg1.mp4")
 
-    txt = TextClip(
-        text,
-        fontsize=60,
-        color='white',
-        size=(900, None),
-        method='caption'
-    ).set_position(("center", "center")).set_duration(duration)
+    if bg.duration < duration:
+        bg = bg.loop(duration=duration)
 
-    video = CompositeVideoClip([bg, txt])
+    bg = bg.subclip(0, duration).resize((1080, 1920))
+
+    text_img = create_text_image(text)
+
+    txt_clip = ImageClip(text_img).set_duration(duration).set_position("center")
+
+    video = CompositeVideoClip([bg, txt_clip])
     video = video.set_audio(audio)
 
-    filename = f"video_{datetime.now().strftime('%H%M%S')}.mp4"
+    filename = "final_video.mp4"
     video.write_videofile(filename, fps=24)
 
     return filename
+
 
 # ==============================
 # TELEGRAM SEND
