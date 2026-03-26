@@ -1,2 +1,11 @@
+moviepy==1.0.3
+imageio-ffmpeg
+edge-tts
+numpy
+decorator
+tqdm
+proglog
+requests
 python-telegram-bot==20.3
+
 
