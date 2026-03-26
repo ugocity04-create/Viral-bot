@@ -10,7 +10,7 @@ from PIL import Image
 # 🔧 FIX ANTIALIAS ERROR
 Image.ANTIALIAS = Image.Resampling.LANCZOS
 
-BOT_TOKEN = "YOUR_NEW_TOKEN"
+BOT_TOKEN = "7744382374:AAFSXZBzimLxVww7q-uDhZVFVvN2tUX_yoU"
 USER_ID = 7968704335
 
 # ==============================
