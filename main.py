@@ -2,8 +2,8 @@ import os
 import asyncio
 from telegram import Bot
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-USER_ID = os.getenv("USER_ID")
+BOT_TOKEN = os.getenv("7744382374:AAFSXZBzimLxVww7q-uDhZVFVvN2tUX_yoU")
+USER_ID = os.getenv("7968704335")
 
 VIDEO_PATH = "videos/bg1.mp4"
 
