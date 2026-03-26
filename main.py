@@ -20,13 +20,14 @@ async def send_video():
         try:
             with open(VIDEO_PATH, "rb") as video:
                 await bot.send_video(chat_id=USER_ID, video=video)
-                print("✅ Video sent successfully!")
+                print("✅ Video sent!")
 
         except Exception as e:
             print(f"❌ Error: {e}")
 
-        await asyncio.sleep(18000)  # 5 hours (5 × 60 × 60)
+        await asyncio.sleep(18000)  # 5 hours
 
 
 if __name__ == "__main__":
     asyncio.run(send_video())
+
