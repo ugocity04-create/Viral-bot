@@ -7,11 +7,12 @@ import edge_tts
 from moviepy.editor import *
 from PIL import Image
 
-# 🔧 FIX ANTIALIAS ERROR
+# ✅ Fix Pillow issue
 Image.ANTIALIAS = Image.Resampling.LANCZOS
 
+# ✅ Use Railway variables
 BOT_TOKEN = "7744382374:AAGdviU1Dge3EPTDrq20BJkaAXBxUyMASqw"
-USER_ID = 7968704335
+USER_ID = "7968704335"
 
 # ==============================
 # CONTENT ENGINE
@@ -42,14 +43,14 @@ def generate_script():
     return text
 
 # ==============================
-# VOICE
+# VOICE GENERATION
 # ==============================
 async def generate_voice(text):
     tts = edge_tts.Communicate(text, voice="en-US-AriaNeural")
     await tts.save("voice.mp3")
 
 # ==============================
-# VIDEO
+# VIDEO CREATION
 # ==============================
 def get_video(duration):
     clip = VideoFileClip("videos/bg1.mp4")
@@ -57,11 +58,9 @@ def get_video(duration):
     if clip.duration < duration:
         clip = clip.loop(duration=duration)
 
-    return clip.subclip(0, duration).resize((1080,1920))
+    return clip.subclip(0, duration).resize((1080, 1920))
 
 def create_video(text):
-    asyncio.run(generate_voice(text))
-
     audio = AudioFileClip("voice.mp3")
     duration = audio.duration
 
@@ -73,7 +72,7 @@ def create_video(text):
         color='white',
         size=(900, None),
         method='caption'
-    ).set_position(("center","center")).set_duration(duration)
+    ).set_position(("center", "center")).set_duration(duration)
 
     video = CompositeVideoClip([bg, txt])
     video = video.set_audio(audio)
@@ -84,7 +83,7 @@ def create_video(text):
     return filename
 
 # ==============================
-# TELEGRAM
+# TELEGRAM SEND
 # ==============================
 async def send_video(bot, path):
     with open(path, "rb") as vid:
@@ -101,6 +100,10 @@ async def main():
             print("🔥 Creating viral content...")
 
             text = generate_script()
+
+            # ✅ FIXED (no asyncio.run)
+            await generate_voice(text)
+
             video_path = create_video(text)
 
             await send_video(bot, video_path)
@@ -112,8 +115,10 @@ async def main():
 
         await asyncio.sleep(18000)  # 5 hours
 
+
 if __name__ == "__main__":
     asyncio.run(main())
+
 
 
 
