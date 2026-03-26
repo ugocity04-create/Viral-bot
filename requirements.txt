@@ -1,4 +1,8 @@
-moviepy
-edge-tts
+moviepy==1.0.3
 imageio-ffmpeg
 numpy
+edge-tts
+decorator
+tqdm
+requests
+proglog
